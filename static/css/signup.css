@@ -1,0 +1,100 @@
+/* Basic reset for padding and margin */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Center the login container */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #F1F6F9; /* Grey background color */
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    display: none; /* Hide the header */
+}
+
+/* Style the login container */
+.login-entries {
+    background-color: #212A3E; /* Dark background for the login container */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Style the app icon placeholder */
+.login-entries::before {
+    content: 'APP ICON';
+    display: block;
+    margin: 0 auto 20px;
+    width: 100px;
+    height: 100px;
+    background-color: #F1F6F9; /* Light grey for the icon background */
+    border-radius: 50%;
+    line-height: 100px;
+    text-align: center;
+    color: #1A1A1A;
+    font-weight: bold;
+}
+
+/* Style input fields */
+.input input[type="text"],
+.input input[type="password"],
+.input input[type="email"] {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #F1F6F9; /* Light grey for the input background */
+    color: #1A1A1A;
+    font-size: 16px;
+}
+
+/* Style login button */
+.submit-button {
+    width: 20%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F1F6F9; /* Light grey for the button background */
+    color: #1A1A1A;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.submit-button:hover {
+    background-color: #9BA4B5; /* Slightly darker grey on hover */
+    transition: 200ms
+}
+
+/* Style forgot and signup links */
+.login-entries p {
+    display: flex;
+    justify-content: space-between;
+    color: #F1F6F9;
+}
+
+.login-entries p a {
+    color: #F1F6F9;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 305px;
+}
+
+.login-entries p a:hover {
+    text-decoration: underline;
+}
+
+/* Style the messages */
+.messages p {
+    color: #FF0000; /* Red color for error messages */
+    margin-left: 50%;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Login - nexo</title>
+</head>
+<body>
+    
+    <h1 class="header"> Login Page </h1>
+
+    <div class="login-entries">    
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <div class=messages>
+                {% for message in messages%}
+                <p> {{message}} </p>
+                {% endfor %}
+            </div>
+
+            <div class='input'>
+                <input type="text" name= "username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <br>
+                <button class='submit-button' type="submit">Login</button>
+            </div>
+        </form>
+        
+        <p> <a href="/signup">Sign up</a> </p>
+
+    </div>
+
+</body>
+</html>

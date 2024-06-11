@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/setting.css' %}">
+    <title>Settings</title>
+</head>
+<body>
+
+    <div class='info'>
+        <h1>Settings</h1>
+        <h1><a href="/"> ◄ </a></h1>
+    </div>
+
+    <div class='container'>
+        <div class='input-boxes'>
+
+            <form action="" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <input class='pfp' type="file" name='image' value="{{ user_profile.profile_pic }}">{{ user_profile.profile_pic }}
+                <br>
+                <textarea class="bio" name="bio" id="bio">{{ user_profile.bio }}</textarea>
+                <br>
+                <button type="submit"> Save </button>
+            </form>
+
+            {% for message in messages%}
+            <h5>{{message}}</h5>
+            {% endfor %}
+        </div>
+
+    </div> 
+
+
+</body>
+</html>
+

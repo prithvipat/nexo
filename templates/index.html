@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>Index Page</title>
+</head>
+<body>
+    <h1> Index </h1>
+    <p>Welcome {{ user.first_name }}</p>
+    <img src="{{user_profile.profile_pic.url}}" alt="">
+
+    <a href="settings">Settings</a>
+    <br>
+    <a href="profile">Profile</a>
+    <br>
+    <a href="logout">Logout</a>
+<!--
+    <nav>
+        <ul>
+            <h1>Welcome {{user.first_name}}</h1>
+            <li><a href="settings">
+                <i class="fas fa-settings" alt=""></i>
+                <span class='nav-item'>Settings</span>
+            </a></li>
+
+            <li><a href="logout">
+                <i class='fas fa-logout'></i>
+                <span class='nav-item'>Logout</span>
+            </a></li>
+
+            <li><a href="Profile">
+                <i class='fas fa-profile'></i>
+                <span class='nav-item'>Pofile</span>
+            </a></li>
+
+
+
+        </ul>
+    </nav>
+-->
+
+
+</body>
+</html>
+
