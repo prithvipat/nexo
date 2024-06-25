@@ -4,9 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <title>Profile - {{user_profile.user.username}} </title>
 </head>
 <body>
+
+    <form action="/follow/" method='POST'>
+        {% csrf_token %}
+        <input type="hidden" value="{{user.username}}" name='follower'/>
+        <input type="hidden" value="{{user_object.username}}" name="user">
+
+        {% if user_object.username == user.username %}
+        <a href='/settings'data-ripple=''>Settings</a>
+        {% else %}
+        <a data-ripple=''><button type='submit'>{{button_text}}</button></a>
+        {% endif %}
+
+    </form>
+
+
+
+    <div class="back">
+        <h1 class="back-button"><a href="/"> ◄ </a></h1>
+    </div>
+    <br>
+
+    <form>
+        <span>{{user_post_length}} Posts</span>
+        <br>
+        <span>{{follower_count}} Followers</span>
+        <br>
+        <span>{{following_count}} Following </span>
+    </form>
+
+    <br>
+    <img class='pfp 'src="{{user_profile.profile_pic.url}}" alt="">
+    <p class='username'> {{ user_profile.user }} </p>
+    <br>
+    <p>{{user_profile.fname}} {{user_profile.lname}}</p>
+    <textarea class="bio" name="bio" id="bio">{{ user_profile.bio }}</textarea>
+    <br>
+
+    <ul>
+        {% for post in user_posts %}
+        <li><img src="{{post.image.url}}" alt=""></li>
+        {% endfor %}
+    </ul>
+
     
 </body>
 </html>
