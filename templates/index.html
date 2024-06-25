@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -5,18 +7,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <title>Index Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300&display=swap" rel="stylesheet">
+    <script src='script.js'></script>
+    
+    <title>Index - nexo</title>
 </head>
 <body>
-    <h1> Index </h1>
-    <p>Welcome {{ user.first_name }}</p>
-    <img src="{{user_profile.profile_pic.url}}" alt="">
-
-    <a href="settings">Settings</a>
+    <h1> nexo</h1>
+    <p>Welcome {{ user.username }}</p>
+    <img class='pfp' src="{{user_profile.profile_pic}}" alt="">
     <br>
-    <a href="profile">Profile</a>
+    <a href="profile/{{user.username}}">Profile</a>
     <br>
     <a href="logout">Logout</a>
+    <br>
+    <a href="post">Upload Post</a>
+    <br>
+    <a href=> For you page </a>
+    <br>
+
+    {% for post in posts %}
+    <div class='posts'>
+        <br>
+        <a href='/profile/{{post.user}}'> {{post.user}}</a>
+        <br>
+        <a href="{{ post.image.url }}">
+            <img class='post-img' src="{{ post.image.url }}" alt="">
+        </a>
+        <p>{{ post.caption }}</p>
+    </div>  
+    <p><a href='/like-post?post_id={{post.id_post}}'class='like-button'> ♥️</a> {{post.likes}}</p>
+
+    {% endfor %}
 <!--
     <nav>
         <ul>
@@ -35,8 +59,6 @@
                 <i class='fas fa-profile'></i>
                 <span class='nav-item'>Pofile</span>
             </a></li>
-
-
 
         </ul>
     </nav>
