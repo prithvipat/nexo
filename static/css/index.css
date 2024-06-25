@@ -1,0 +1,15 @@
+.pfp {
+    border-radius: 30%;
+    height: 100px;
+    width: auto;
+}
+
+.post-img {
+    height: 300px;
+    width:auto;
+}
+
+a {
+    text-decoration: none;
+}
+

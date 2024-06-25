@@ -1,0 +1,76 @@
+body {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('/media/background.png');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+img {
+    background-color: white;
+}
+
+.login-entries {
+    background-color: #353935;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 450px;
+    height: 450px;
+    transition: transform 0.5s ease; /* Added transition for smooth movement */
+    transform: translateX(0); /* Initial position */
+}
+
+img {
+    border-radius: 50%;
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+input[type="text"], input[type="password"] {
+    width: 350px;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    height: 50px;
+    font-size: larger;
+}
+
+button.submit-button {
+    width: 90px;
+    padding: 10px;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+button.submit-button:hover {
+    background-color: #ddd;
+    transition: 150ms ease-in-out;
+}
+
+p, a {
+    color: #000;
+    text-decoration: none;
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 5px;
+    display: inline-block;
+}
+
+p, a:hover {
+    background-color: #ddd;
+    transition: 150ms ease-in-out;
+}

@@ -1,0 +1,11 @@
+.pfp {
+    height: 150px;
+    width: auto;
+    border-radius: 50%;
+}
+
+textarea {
+    resize: none;
+    height: 150px;
+    width: 350px;
+}
