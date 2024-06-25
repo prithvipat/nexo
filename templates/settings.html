@@ -11,7 +11,7 @@
 
     <div class='info'>
         <h1>Settings</h1>
-        <h1><a href="/"> ◄ </a></h1>
+        <h1><a href="/profile/{{user.username}}"> ◄ </a></h1>
     </div>
 
     <div class='container'>
@@ -19,7 +19,9 @@
 
             <form action="" enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <input class='pfp' type="file" name='image' value="{{ user_profile.profile_pic }}">{{ user_profile.profile_pic }}
+                <img src="{{user_profile.profile_pic.url}}" alt="">
+                <br>
+                <input class='pfp' type="file" name='image' value="{{ user_profile.profile_pic }}">
                 <br>
                 <textarea class="bio" name="bio" id="bio">{{ user_profile.bio }}</textarea>
                 <br>
