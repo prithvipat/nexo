@@ -12,9 +12,11 @@ Finished
 - Logout 
 
 Needs Work
-- Liking post reloads page, need to make it dynamic
+- Liking post reloads the page, need to make it dynamic
 - CSS and adding React stuff (MUI)
 - Profile posts and general layout
 - Index page
 - Background for login/signup
 - Better Icons (boxicons)
+- Posts on the main page
+- Pictures to be unsretched
