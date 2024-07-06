@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -11,36 +9,108 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300&display=swap" rel="stylesheet">
     <script src='script.js'></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     
     <title>Index - nexo</title>
 </head>
 <body>
-    <h1> nexo</h1>
-    <p>Welcome {{ user.username }}</p>
-    <img class='pfp' src="{{user_profile.profile_pic}}" alt="">
-    <br>
-    <a href="profile/{{user.username}}">Profile</a>
-    <br>
-    <a href="logout">Logout</a>
-    <br>
-    <a href="post">Upload Post</a>
-    <br>
-    <a href=> For you page </a>
-    <br>
+
+    <div class='sidebar'>
+        <div class='top'>
+            <div class='logo'>
+            </div>
+            <i class='bx bx-menu' id='btn'></i>
+        </div>
+        <div class='user'>
+            <img class='user-img' src="{{user_profile.profile_pic.url}}" alt="" href='profile/{{user.username}}/'>
+            <div>
+                <p class='bold'>{{user_profile.user}}</p>
+            </div>
+        </div>
+        <ul>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-search'></i>
+                    <span class='nav-items'>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-calendar-event'></i>
+                    <span class='nav-items'>Events</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-message-dots'></i>
+                    <span class='nav-items'>SMS</span>
+                </a>
+            </li>
+            <li>
+                <a href="logout">
+                    <i class='bx bxs-log-out'></i>
+                    <span class='nav-items'>Logout</span>
+                </a>
+            </li>
+            <li>
+                <a href="post">
+                    <i class='bx bxs-cloud-upload'></i>
+                    <span class='nav-items'>Post</span>
+                </a>
+            </li>
+        </ul>
+        <img class='logo-pic' src="media/jj.png" alt="">
+
+
+
+    </div>
+
+    </div>
+
+
+    <!--
+    <nav>
+        <h1> nexo</h1>
+        <img class='pfp' src="{{user_profile.profile_pic}}" alt="">
+        <br>
+        <a href="profile/{{user.username}}/">Profile</a>
+        <br>
+        <a href="logout">Logout</a>
+        <br>
+        <a href="post">Upload Post</a>
+        <br>
+        <a href=> For you page </a>
+    </nav>
+-->
+
 
     {% for post in posts %}
-    <div class='posts'>
-        <br>
-        <a href='/profile/{{post.user}}'> {{post.user}}</a>
-        <br>
-        <a href="{{ post.image.url }}">
-            <img class='post-img' src="{{ post.image.url }}" alt="">
-        </a>
-        <p>{{ post.caption }}</p>
-    </div>  
-    <p><a href='/like-post?post_id={{post.id_post}}'class='like-button'> ♥️</a> {{post.likes}}</p>
-
+    <div class="post">
+        <div class="post-header">
+            <img class="post-user-img" src="{{ user_profile.profile_pic.url }}" alt="" href="profile/{{ user.username }}/">
+            <div class="post-user-info">
+                <a class='post-username' href="/profile/{{ post.user }}/">{{ post.user }}</a>
+            </div>
+        </div>
+        <div class="post-body">
+            <a href="{{ post.image.url }}">
+                <img class="post-img" src="{{ post.image.url }}" alt="">
+            </a>
+        </div>
+        <div class="post-footer">
+            <div class="likes-section">
+                <a href="/like-post?post_id={{ post.id_post }}" class="like-button">♥️</a>
+                <span class='num-likes'>{{ post.likes }}</span>
+            </div>
+            <p class="post-caption"> <b>{{user.username}}:</b> {{ post.caption }}</p>
+        </div>
+    </div>
     {% endfor %}
+
+
+
+
 <!--
     <nav>
         <ul>
@@ -66,5 +136,14 @@
 
 
 </body>
-</html>
 
+<script>
+    let btn = document.querySelector('#btn')
+    let sidebar = document.querySelector('.sidebar')
+
+    btn.onclick = function() {
+        sidebar.classList.toggle('active');
+    };
+</script>
+
+</html>
