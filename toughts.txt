@@ -1,0 +1,20 @@
+Todo
+- Delete and edit Posts
+- Change password
+- Send email to people when signed up
+- Search people
+- Events page
+- SMS page
+
+Finished
+- Login page
+- Nav Bar
+- Logout 
+
+Needs Work
+- Liking post reloads page, need to make it dynamic
+- CSS and adding React stuff (MUI)
+- Profile posts and general layout
+- Index page
+- Background for login/signup
+- Better Icons (boxicons)
