@@ -9,48 +9,54 @@
 </head>
 <body>
 
-    <form action="/follow/" method='POST'>
-        {% csrf_token %}
-        <input type="hidden" value="{{user.username}}" name='follower'/>
-        <input type="hidden" value="{{user_object.username}}" name="user">
-
-        {% if user_object.username == user.username %}
-        <a href='/settings'data-ripple=''>Settings</a>
-        {% else %}
-        <a data-ripple=''><button type='submit'>{{button_text}}</button></a>
-        {% endif %}
-
-    </form>
-
-
-
     <div class="back">
         <h1 class="back-button"><a href="/"> ◄ </a></h1>
     </div>
     <br>
 
-    <form>
-        <span>{{user_post_length}} Posts</span>
-        <br>
-        <span>{{follower_count}} Followers</span>
-        <br>
-        <span>{{following_count}} Following </span>
-    </form>
+    <div class='info'>
+        <img class='pfp 'src="{{user_profile.profile_pic.url}}" alt="">
+        <div class='info-plus'>
+            <div>
+                <span class='username'> {{ user_profile.user }} </span>
+                <br>
+                <span>{{ user_post_length }} Posts</span>
+                <span>{{ follower_count }} Followers</span>
+                <span>{{ following_count }} Following </span>
+                <form class='follow-settings' action="/follow/" method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" value="{{user.username}}" name='follower'/>
+                    <input type="hidden" value="{{user_object.username}}" name="user">
+                    {% if user_object.username == user.username %}
+                    <a class='settings' href="/settings">Edit Profile</a>
+                    {% else %} 
+                    <a data-ripple=''><button type='submit'>{{button_text}}</button></a>
+                    {% endif %}
+                    <br>
+                </form>
 
-    <br>
-    <img class='pfp 'src="{{user_profile.profile_pic.url}}" alt="">
-    <p class='username'> {{ user_profile.user }} </p>
-    <br>
-    <p>{{user_profile.fname}} {{user_profile.lname}}</p>
+            </div>
+        </div>
+    </div>
+
     <textarea class="bio" name="bio" id="bio">{{ user_profile.bio }}</textarea>
-    <br>
 
-    <ul>
-        {% for post in user_posts %}
-        <li><img src="{{post.image.url}}" alt=""></li>
-        {% endfor %}
-    </ul>
+
+    <div class='posts'>
+        <ul>
+            {% for post in user_posts %}
+            <li><img src="{{post.image.url}}" alt=""></li>
+            {% endfor %}
+        </ul>
+    </div>
 
     
 </body>
 </html>
+
+<!--
+<p>{{ post.caption }}</p>
+</div>  
+<p><a href='/like-post?post_id={{post.id_post}}'class='like-button'> ♥️</a> {{post.likes}}</p>
+
+-->
