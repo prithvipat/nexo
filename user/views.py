@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from.models import Profile, Posts, LikePost, FollowerCount
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import os
 from itertools import chain
 from django.db.models import Q
@@ -21,7 +21,10 @@ def index(request):
     for users in user_following:
         user_following_list.append(users.user)
 
-    # Get posts from users that the current user is following
+    # Include the current user in the list of users to fetch posts for
+    user_following_list.append(request.user)
+
+    # Get posts from users that the current user is following and the user's own posts
     feed = Posts.objects.filter(user__in=user_following_list).order_by('-created_at')
 
     return render(request, 'index.html', {'user_profile': user_profile, 'posts': feed})
@@ -49,7 +52,6 @@ def settings(request):
 
     return render(request, 'settings.html', {'user_profile': user_profile})
 
-
 def signup(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -68,16 +70,8 @@ def signup(request):
             elif User.objects.filter(username=username).exists():
                 messages.info(request, 'Username Taken')
                 return redirect('signup')
-            a = False
-            d = False
-
-            for i in range(len(password)):
-                if password.isalpha():
-                    a = True
-                if password.isdigit():
-                    d = True
         
-            if a == True and d == True:
+            else:
 
                 user = User.objects.create_user(username=username, email=email, password=password, first_name=firstName, last_name=lastName)
                 user.save()
@@ -90,9 +84,6 @@ def signup(request):
                 new_profile.save()
 
                 return redirect('settings')
-            else:
-                messages.info(request, 'Password Requires a Letter and a Number!')
-                return redirect('signup')
 
         else:
             messages.info(request, 'Passwords do not Match')
@@ -177,21 +168,17 @@ def like_post(request):
 
     like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
 
-    if like_filter == None:
+    if like_filter is None:
         new_like = LikePost.objects.create(post_id=post_id, username=username)
         new_like.save()
         post.likes = post.likes + 1
-        post.save()
-        return redirect('/')
-    
     else:
         like_filter.delete()
         post.likes = post.likes - 1
-        post.save()
-        return redirect('/')
-
-
-
+    
+    post.save()
+    return redirect('/')
+    
 @login_required(login_url='login')
 def follow(request):
     if request.method == 'POST':
@@ -210,7 +197,39 @@ def follow(request):
     else:
         return redirect('/')
 
+def edit_post(request): #Work in pogress
+    post_id = request.GET.get('post_id')
+    post = Posts.objects.get(id_post=post_id)
 
-"""
+    if request == 'POST':
+        caption = request.POST.get('caption')
 
-"""
+        if caption:
+            post.caption = caption
+    
+    return redirect('/profile')
+
+def delete_post(request): # Work in progress
+    post_id = request.GET.get('post_id')
+    post = Posts.objects.get(id_post=post_id)
+
+    if request == 'POST':
+        post.delete()
+        return redirect('profile/')
+
+@login_required # Work in progress
+def edit_password(request):
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user_object)
+
+    if request.method == 'POST':
+        old_password = request.POST['oldpassword']
+        new_password = request.POST.get('newpassword')
+
+        user_object.save()
+        return redirect('/')
+
+    return render(request, 'edit_password.html')
+
+def delete_user(request): # Work in progress
+    pass
