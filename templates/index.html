@@ -1,149 +1,136 @@
 <!DOCTYPE html>
 {% load static %}
+<!-- Coding by CodingLab | www.codinglabweb.com -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300&display=swap" rel="stylesheet">
-    <script src='script.js'></script>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
     
-    <title>Index - nexo</title>
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">    
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    
+    <!--<title>Dashboard Sidebar Menu</title>--> 
 </head>
 <body>
-
-    <div class='sidebar'>
-        <div class='top'>
-            <div class='logo'>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img src="media/jj.png" alt="">
+                </span>
+                <div class="text logo-text">
+                    <span class="name">nexo</span>
+                </div>
             </div>
-            <i class='bx bx-menu' id='btn'></i>
-        </div>
-        <div class='user'>
-            <img class='user-img' src="{{user_profile.profile_pic.url}}" alt="" href='profile/{{user.username}}/'>
-            <div>
-                <p class='bold'>{{user_profile.user}}</p>
+            <i class='bx bx-chevron-right toggle'></i>
+        </header>
+        <div class="menu-bar">
+            <div class="menu">
+                <li class="search-box">
+                    <i class='bx bx-search icon'></i>
+                    <input type="text" placeholder="Search...">
+                </li>
+                <ul class="menu-links">
+                    <li class="nav-link">
+                        <a href="/profile/{{user_profile.user}}/">
+                            <i class='bx bx-home-alt icon'></i>
+                            <span class="text nav-text">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-message-square-dots icon'></i>
+                            <span class="text nav-text">Messages</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-bell icon'></i>
+                            <span class="text nav-text">Notifications</span>
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#">
+                            <i class='bx bx-cloud-upload icon' ></i>
+                            <span class="text nav-text">Upload</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bottom-content">
+                <li class="">
+                    <a href="logout">
+                        <i class='bx bx-log-out icon' ></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class='bx bx-moon icon moon'></i>
+                        <i class='bx bx-sun icon sun'></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+                
             </div>
         </div>
-        <ul>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-search'></i>
-                    <span class='nav-items'>Search</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-calendar-event'></i>
-                    <span class='nav-items'>Events</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-message-dots'></i>
-                    <span class='nav-items'>SMS</span>
-                </a>
-            </li>
-            <li>
-                <a href="logout">
-                    <i class='bx bxs-log-out'></i>
-                    <span class='nav-items'>Logout</span>
-                </a>
-            </li>
-            <li>
-                <a href="post">
-                    <i class='bx bxs-cloud-upload'></i>
-                    <span class='nav-items'>Post</span>
-                </a>
-            </li>
-        </ul>
-        <img class='logo-pic' src="media/jj.png" alt="">
-
-
-
-    </div>
-
-    </div>
-
-
-    <!--
-    <nav>
-        <h1> nexo</h1>
-        <img class='pfp' src="{{user_profile.profile_pic}}" alt="">
-        <br>
-        <a href="profile/{{user.username}}/">Profile</a>
-        <br>
-        <a href="logout">Logout</a>
-        <br>
-        <a href="post">Upload Post</a>
-        <br>
-        <a href=> For you page </a>
     </nav>
--->
+    <section class="home">
+        
+        {% for post in posts %}
+        <div class="post">
+            <div class="post-header">
+                <img class="post-user-img" src="{{ user_profile.profile_pic.url }}" alt="" href="profile/{{ user.username }}/">
+                <div class="post-user-info">
+                    <a class='post-username' href="/profile/{{ post.user }}/">{{ post.user }}</a>
+                </div>
+            </div>
+            <div class="post-body">
+                <a href="{{ post.image.url }}">
+                    <img class="post-img" src="{{ post.image.url }}" alt="">
+                </a>
+            </div>
+            <div class="post-footer">
+                <div class="likes-section">
+                    <a href="/like-post?post_id={{ post.id_post }}" class="like-button">♥️</a>
 
-
-    {% for post in posts %}
-    <div class="post">
-        <div class="post-header">
-            <img class="post-user-img" src="{{ user_profile.profile_pic.url }}" alt="" href="profile/{{ user.username }}/">
-            <div class="post-user-info">
-                <a class='post-username' href="/profile/{{ post.user }}/">{{ post.user }}</a>
+                    <span class='num-likes'>{{ post.likes }}</span>
+                </div>
+                <p class="post-caption"><b>{{user.username}}:</b> {{ post.caption }}</p>
             </div>
         </div>
-        <div class="post-body">
-            <a href="{{ post.image.url }}">
-                <img class="post-img" src="{{ post.image.url }}" alt="">
-            </a>
-        </div>
-        <div class="post-footer">
-            <div class="likes-section">
-                <a href="/like-post?post_id={{ post.id_post }}" class="like-button">♥️</a>
-                <span class='num-likes'>{{ post.likes }}</span>
-            </div>
-            <p class="post-caption"> <b>{{user.username}}:</b> {{ post.caption }}</p>
-        </div>
-    </div>
-    {% endfor %}
-
-
-
-
-<!--
-    <nav>
-        <ul>
-            <h1>Welcome {{user.first_name}}</h1>
-            <li><a href="settings">
-                <i class="fas fa-settings" alt=""></i>
-                <span class='nav-item'>Settings</span>
-            </a></li>
-
-            <li><a href="logout">
-                <i class='fas fa-logout'></i>
-                <span class='nav-item'>Logout</span>
-            </a></li>
-
-            <li><a href="Profile">
-                <i class='fas fa-profile'></i>
-                <span class='nav-item'>Pofile</span>
-            </a></li>
-
-        </ul>
-    </nav>
--->
-
-
+        {% endfor %}
+        
+    </section>
+    <script>
+        const body = document.querySelector('body'),
+      sidebar = body.querySelector('nav'),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".search-box"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+toggle.addEventListener("click" , () =>{
+    sidebar.classList.toggle("close");
+})
+searchBtn.addEventListener("click" , () =>{
+    sidebar.classList.remove("close");
+})
+modeSwitch.addEventListener("click" , () =>{
+    body.classList.toggle("dark");
+    
+    if(body.classList.contains("dark")){
+        modeText.innerText = "Light mode";
+    }else{
+        modeText.innerText = "Dark mode";
+        
+    }
+});
+    </script>
 </body>
-
-<script>
-    let btn = document.querySelector('#btn')
-    let sidebar = document.querySelector('.sidebar')
-
-    btn.onclick = function() {
-        sidebar.classList.toggle('active');
-    };
-</script>
-
 </html>
