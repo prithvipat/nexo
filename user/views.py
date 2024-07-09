@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from.models import Profile, Posts, LikePost, FollowerCount
+from.models import Profile, Posts, LikePost, FollowerCount, Comments
 from django.http import HttpResponse, JsonResponse
 import os
 from itertools import chain
@@ -11,6 +11,7 @@ from django.db.models import Q
 
 @login_required(login_url='login')
 def index(request):
+    
     user_object = User.objects.get(username=request.user.username)
     user_profile = Profile.objects.get(user=user_object)
 
@@ -21,11 +22,10 @@ def index(request):
     for users in user_following:
         user_following_list.append(users.user)
 
-    # Include the current user in the list of users to fetch posts for
     user_following_list.append(request.user)
 
-    # Get posts from users that the current user is following and the user's own posts
     feed = Posts.objects.filter(user__in=user_following_list).order_by('-created_at')
+    
 
     return render(request, 'index.html', {'user_profile': user_profile, 'posts': feed})
 
@@ -147,6 +147,8 @@ def profile(request, pk):
 
 @login_required(login_url='login')
 def post(request):
+    user_profile = Profile.objects.get(user=request.user)
+
     if request.method == 'POST':
         user = request.user.username
         img=request.FILES['image']
@@ -158,26 +160,25 @@ def post(request):
         return redirect('/')
 
     else: 
-        return render(request, 'post.html')
+        return render(request, 'post.html', {'user_profile': user_profile})
 
 @login_required(login_url='login')
 def like_post(request):
-    username = request.user.username
-    post_id = request.GET.get('post_id')
-    post = Posts.objects.get(id_post=post_id)
+    post_id = request.POST.get('post_id')
+    post = get_object_or_404(Posts, id_post=post_id)
+    like, created = LikePost.objects.get_or_create(post_id=post_id, username=request.user.username)
+    liked='False'
 
-    like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
-
-    if like_filter is None:
-        new_like = LikePost.objects.create(post_id=post_id, username=username)
-        new_like.save()
-        post.likes = post.likes + 1
+    if not created:
+        like.delete()
+        post.likes -= 1
+        liked='False'
     else:
-        like_filter.delete()
-        post.likes = post.likes - 1
-    
+        post.likes += 1
+        liked = 'True'
     post.save()
-    return redirect('/')
+
+    return JsonResponse({'likes': post.likes, 'liked':liked})
     
 @login_required(login_url='login')
 def follow(request):
@@ -197,25 +198,16 @@ def follow(request):
     else:
         return redirect('/')
 
-def edit_post(request): #Work in pogress
-    post_id = request.GET.get('post_id')
-    post = Posts.objects.get(id_post=post_id)
-
-    if request == 'POST':
-        caption = request.POST.get('caption')
-
-        if caption:
-            post.caption = caption
-    
-    return redirect('/profile')
-
 def delete_post(request): # Work in progress
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user_object)
     post_id = request.GET.get('post_id')
     post = Posts.objects.get(id_post=post_id)
 
     if request == 'POST':
         post.delete()
         return redirect('profile/')
+    return redirect(f'profile/{user_profile.user}')
 
 @login_required # Work in progress
 def edit_password(request):
@@ -233,3 +225,21 @@ def edit_password(request):
 
 def delete_user(request): # Work in progress
     pass
+
+def comment(request):
+    if request == "POST":
+        user = request.user
+        post_id = request.POST.get('post_id')
+        post = get_object_or_404(Posts, id_post=post_id)
+
+        comment = request.POST.get('comment')
+
+        if comment:
+            new_comment = Comments.objects.create(post_id=post_id, user=user, comment=comment)
+            new_comment.save()
+            
+    else:
+        return redirect('/')
+    
+    return redirect('/')
+
