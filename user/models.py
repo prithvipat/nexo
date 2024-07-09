@@ -34,9 +34,19 @@ class LikePost(models.Model):
     def __str__(self):
         return self.username
 
+
 class FollowerCount(models.Model):
     follower = models.CharField(max_length=100)
     user = models.CharField(max_length=100)
 
     def __str__(self):
         return self.user
+
+
+class Comments(models.Model): # Work in progress
+    post_id = models.ForeignKey(Posts, on_delete=models.CASCADE) # The post
+    user = models.ForeignKey(User, on_delete=models.CASCADE)    # The User
+    comment = models.TextField()               # The comment
+
+    def __str__(self):
+        return self.comment[:20]
